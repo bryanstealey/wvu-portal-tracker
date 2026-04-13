@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* WVU-inspired palette blended with morgantown.ai brand */
+  --color-wvu-blue: #002855;
+  --color-wvu-gold: #EAAA00;
+  --color-slate-dark: #1E293B;
+  --color-slate-medium: #334155;
+  --color-slate-light: #64748B;
+
+  /* Backgrounds */
+  --color-bg-primary: #F8FAFC;
+  --color-bg-white: #FFFFFF;
+  --color-bg-dark: #0F172A;
+  --color-bg-section: #F1F5F9;
+
+  /* Text */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-inverse: #F8FAFC;
+
+  /* Status colors */
+  --color-status-target: #64748B;
+  --color-status-visiting: #2563EB;
+  --color-status-committed: #059669;
+  --color-status-signed: #047857;
+  --color-status-gone: #9CA3AF;
+
+  /* CTA (from morgantown.ai) */
+  --color-cta: #FE5F55;
+  --color-cta-hover: #E5453B;
+
+  /* Borders */
+  --color-border: #E2E8F0;
+  --color-border-dark: #334155;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--color-text-primary);
+  --font-sans: var(--font-plus-jakarta);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
 }

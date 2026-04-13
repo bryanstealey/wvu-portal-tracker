@@ -1,0 +1,18 @@
+# WVU Transfer Portal Tracker - Robots Configuration
+User-agent: *
+Allow: /
+
+# Allow AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://portal.morgantown.ai/sitemap.xml
