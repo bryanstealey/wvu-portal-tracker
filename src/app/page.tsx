@@ -80,18 +80,6 @@ function RosterContext({ players }: { players: Player[] }) {
   );
 }
 
-function PositionNeed({ label, severity }: { label: string; severity: 'critical' | 'moderate' | 'low' }) {
-  const colors = {
-    critical: 'bg-red-100 text-red-800 border-red-200',
-    moderate: 'bg-amber-100 text-amber-800 border-amber-200',
-    low: 'bg-green-100 text-green-800 border-green-200',
-  };
-  return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold border ${colors[severity]}`}>
-      {label}
-    </span>
-  );
-}
 
 export default async function Home() {
   const data = await readDashboard();
@@ -139,15 +127,7 @@ export default async function Home() {
         {/* Roster Context */}
         <RosterContext players={data.players} />
 
-        {/* Position Needs */}
-        <div className="mb-8">
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Biggest Needs</div>
-          <div className="flex flex-wrap gap-2">
-            <PositionNeed label="Small Forward" severity="critical" />
-            <PositionNeed label="Shooting Guard" severity="critical" />
-            <PositionNeed label="Center" severity="moderate" />
-          </div>
-        </div>
+
 
         {/* Incoming Targets */}
         <section className="mb-10">
