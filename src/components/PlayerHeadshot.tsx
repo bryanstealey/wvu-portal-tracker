@@ -44,9 +44,8 @@ export function PlayerHeadshot({
       <Image
         src={`https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/${espnId}.png`}
         alt={name}
-        width={size}
-        height={size}
-        className="object-cover"
+        fill
+        className="object-cover scale-[1.35] object-top"
         unoptimized
         onError={() => setFailed(true)}
       />

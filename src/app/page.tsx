@@ -59,6 +59,8 @@ export default async function Home() {
   const targetPlayers = incoming.filter(p => p.status === 'target');
   const gonePlayers = incoming.filter(p => p.status === 'gone');
   const outgoing = data.players.filter(p => p.direction === 'outgoing');
+  const returning = data.players.filter(p => p.direction === 'returning');
+  const freshmen = data.players.filter(p => p.direction === 'freshman');
 
   return (
     <div className="min-h-screen bg-[var(--surface)]">
@@ -108,6 +110,16 @@ export default async function Home() {
           {incoming.length === 0 && (
             <p className="text-sm text-[#8e909a] text-center py-8">No incoming targets yet.</p>
           )}
+        </section>
+
+        {/* Returning + Freshmen */}
+        <section>
+          <SectionHeader title="Returning & Incoming Freshmen" count={returning.length + freshmen.length} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[...returning, ...freshmen].map((player) => (
+              <PlayerCard key={player.id} player={player} />
+            ))}
+          </div>
         </section>
 
         {/* Outgoing Transfers */}
