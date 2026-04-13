@@ -23,6 +23,8 @@ export interface Player {
   eligibilityYears?: number;
   highlightUrl?: string;
   destinationSchool?: string;
+  competingSchools?: string[];
+  espnId?: string;
   note?: string;
   sources: string[];
   firstTracked: string;

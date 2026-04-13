@@ -6,9 +6,9 @@ function formatTimestamp(dateString: string): string {
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
   if (diffHours < 1) return 'just now';
-  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays === 1) return 'yesterday';
-  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
 
   return date.toLocaleDateString('en-US', {
     month: 'short',
@@ -24,7 +24,7 @@ export function LastUpdated({ timestamp }: { timestamp: string }) {
   const isStale = diffHours > 12;
 
   return (
-    <div className="flex items-center gap-1.5 text-xs text-slate-400">
+    <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#8e909a] uppercase tracking-wider">
       <div
         className={`w-1.5 h-1.5 rounded-full ${
           isStale ? 'bg-amber-400' : 'bg-emerald-400'
@@ -32,7 +32,7 @@ export function LastUpdated({ timestamp }: { timestamp: string }) {
       />
       <span>
         Updated {formatTimestamp(timestamp)}
-        {isStale && ' — data may be outdated'}
+        {isStale && ' — stale'}
       </span>
     </div>
   );

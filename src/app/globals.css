@@ -1,53 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  /* WVU-inspired palette blended with morgantown.ai brand */
-  --color-wvu-blue: #002855;
-  --color-wvu-gold: #EAAA00;
-  --color-slate-dark: #1E293B;
-  --color-slate-medium: #334155;
-  --color-slate-light: #64748B;
+  /* Dark surface palette (from Stitch) */
+  --surface-lowest: #0c0f0f;
+  --surface-dim: #121414;
+  --surface: #121414;
+  --surface-container-low: #1a1c1c;
+  --surface-container: #1e2020;
+  --surface-container-high: #282a2b;
+  --surface-container-highest: #333535;
+  --surface-bright: #38393a;
 
-  /* Backgrounds */
-  --color-bg-primary: #F8FAFC;
-  --color-bg-white: #FFFFFF;
-  --color-bg-dark: #0F172A;
-  --color-bg-section: #F1F5F9;
+  /* WVU brand */
+  --wvu-gold: #FEBB21;
+  --wvu-gold-dim: #ba8700;
+  --wvu-navy: #002855;
 
   /* Text */
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  --color-text-muted: #94A3B8;
-  --color-text-inverse: #F8FAFC;
+  --on-surface: #E2E2E2;
+  --on-surface-variant: #C4C6D0;
+  --on-surface-muted: #8e909a;
 
-  /* Status colors */
-  --color-status-target: #64748B;
-  --color-status-visiting: #2563EB;
-  --color-status-committed: #059669;
-  --color-status-signed: #047857;
-  --color-status-gone: #9CA3AF;
-
-  /* CTA (from morgantown.ai) */
-  --color-cta: #FE5F55;
-  --color-cta-hover: #E5453B;
+  /* Accents */
+  --accent-green: #4ade80;
+  --accent-blue: #60a5fa;
+  --accent-amber: #fbbf24;
+  --accent-red: #f87171;
+  --accent-coral: #FE5F55;
 
   /* Borders */
-  --color-border: #E2E8F0;
-  --color-border-dark: #334155;
+  --outline-variant: #43474f;
 }
 
 @theme inline {
-  --color-background: var(--color-bg-primary);
-  --color-foreground: var(--color-text-primary);
+  --color-background: var(--surface);
+  --color-foreground: var(--on-surface);
   --font-sans: var(--font-plus-jakarta);
+  --font-mono: var(--font-jetbrains);
 }
 
 body {
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
+  background: var(--surface);
+  color: var(--on-surface);
 }
 
-/* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
 }
+
+/* Utility for hiding scrollbar on filter chips */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
