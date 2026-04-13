@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "Live tracking of WVU basketball transfer portal activity. Incoming targets, outgoing transfers, and the latest news.",
     type: "website",
-    url: "https://portal.morgantown.ai",
+    url: "https://wvu-portal.morgantown.ai",
   },
   twitter: {
     card: "summary_large_image",
