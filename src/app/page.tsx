@@ -114,9 +114,15 @@ export default async function Home() {
 
         {/* Returning + Freshmen */}
         <section>
-          <SectionHeader title="Returning & Incoming Freshmen" count={returning.length + freshmen.length} />
+          <SectionHeader title="Returning Players" count={returning.length} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+            {returning.map((player) => (
+              <PlayerCard key={player.id} player={player} />
+            ))}
+          </div>
+          <SectionHeader title="Incoming Freshmen" count={freshmen.length} />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {[...returning, ...freshmen].map((player) => (
+            {freshmen.map((player) => (
               <PlayerCard key={player.id} player={player} />
             ))}
           </div>
