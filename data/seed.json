@@ -80,8 +80,9 @@
       "previousSchool": "UNLV",
       "direction": "incoming",
       "status": "target",
-      "stats": { "ppg": 20.7, "rpg": 3.1, "apg": 2.5, "fgPct": 49.7 },
+      "stats": { "ppg": 20.7, "rpg": 3.1, "apg": 2.5, "fgPct": 49.7, "threePct": 41.4 },
       "eligibilityYears": 1,
+      "note": "All-Mountain West First Team. Expected to command seven figures in NIL.",
       "sources": ["On3"],
       "firstTracked": "2026-04-10",
       "lastUpdated": "2026-04-12"
@@ -90,11 +91,13 @@
       "id": "barkley-blake",
       "name": "Blake Barkley",
       "position": "F",
+      "height": "6-8",
       "previousSchool": "East Tennessee State",
       "direction": "incoming",
       "status": "target",
       "stats": { "ppg": 14.6, "rpg": 5.8, "apg": 1.2, "fgPct": 58.9 },
       "eligibilityYears": 3,
+      "note": "Originally from Morgantown, WV. Also hearing from VCU, Auburn, Virginia Tech, Iowa, USC, Kansas State.",
       "sources": ["On3"],
       "firstTracked": "2026-04-10",
       "lastUpdated": "2026-04-12"
@@ -103,11 +106,13 @@
       "id": "taylor-kameron",
       "name": "Kameron Taylor",
       "position": "G",
+      "height": "6-7",
       "previousSchool": "UNC Asheville",
       "direction": "incoming",
       "status": "target",
       "stats": { "ppg": 18.9, "rpg": 5.0, "apg": 3.0, "fgPct": 45.3 },
-      "eligibilityYears": 2,
+      "eligibilityYears": 3,
+      "note": "Cancelled Kansas visit. Also pursued by Indiana, SMU, Texas, Louisville, Virginia, Michigan, Florida State, Houston.",
       "sources": ["On3"],
       "firstTracked": "2026-04-10",
       "lastUpdated": "2026-04-12"
@@ -121,6 +126,7 @@
       "status": "target",
       "stats": { "ppg": 15.0, "rpg": 2.7, "apg": 2.8, "fgPct": 46.6 },
       "eligibilityYears": 2,
+      "note": "A-10 Sixth Man of the Year. Visiting Kansas and Tennessee April 15-17.",
       "sources": ["On3"],
       "firstTracked": "2026-04-10",
       "lastUpdated": "2026-04-12"
@@ -428,6 +434,16 @@
     }
   ],
   "news": [
+    {
+      "id": "news-000",
+      "title": "Butler transfer guard Finley Bizjack commits to West Virginia",
+      "summary": "Finley Bizjack, who averaged 17.1 PPG at Butler and earned All-Big East Third Team honors, has committed to WVU after visiting campus April 12. He gives WVU a proven scorer to help replace Honor Huff's production.",
+      "sourceUrl": "https://www.si.com/college/westvirginia/basketball/butler-transfer-guard-finley-bizjack-commits-to-west-virginia",
+      "sourceName": "SI.com / Mountaineer Maven",
+      "publishedAt": "2026-04-13T10:00:00Z",
+      "relatedPlayerNames": ["Finley Bizjack"],
+      "category": "commitment"
+    },
     {
       "id": "news-001",
       "title": "WVU receives commitment from Boise State transfer Javan Buchanan",
