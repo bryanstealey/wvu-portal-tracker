@@ -198,10 +198,12 @@
       "weight": "240",
       "previousSchool": "Mercer",
       "direction": "incoming",
-      "status": "target",
+      "status": "gone",
       "stats": { "ppg": 13.2, "rpg": 10.6, "bpg": 1.7 },
       "eligibilityYears": 1,
       "espnId": "4917161",
+      "destinationSchool": "Pittsburgh",
+      "note": "Committed to Pitt.",
       "sources": ["On3"],
       "firstTracked": "2026-04-10",
       "lastUpdated": "2026-04-12"
