@@ -3,22 +3,26 @@ import { PlayerCard } from '@/components/PlayerCard';
 import { NewsFeed } from '@/components/NewsFeed';
 import { LeadMagnet } from '@/components/LeadMagnet';
 import { LastUpdated } from '@/components/LastUpdated';
-import { RosterProgressBar } from '@/components/RosterProgressBar';
-import { WhatsNew } from '@/components/WhatsNew';
-import type { Player } from '@/lib/types';
+import { RosterRollCall } from '@/components/RosterRollCall';
+import type { Player, NewsItem } from '@/lib/types';
 
 export const revalidate = 900;
 
-function SectionHeader({ title, count }: { title: string; count?: number }) {
+function SectionHeader({ title, count, subtitle }: { title: string; count?: number; subtitle?: string }) {
   return (
-    <div className="flex items-center gap-3 mb-5">
-      <div className="w-1.5 h-1.5 rounded-full bg-[#FEBB21]" />
-      <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[#C4C6D0]">
-        {title}
-        {count !== undefined && (
-          <span className="ml-2 text-[#FEBB21]">{count}</span>
-        )}
-      </h2>
+    <div className="mb-5">
+      <div className="flex items-center gap-3">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#FEBB21]" />
+        <h2 className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[#C4C6D0]">
+          {title}
+          {count !== undefined && (
+            <span className="ml-2 text-[#FEBB21]">{count}</span>
+          )}
+        </h2>
+      </div>
+      {subtitle && (
+        <p className="text-xs text-[#8e909a] mt-1.5 ml-[18px]">{subtitle}</p>
+      )}
     </div>
   );
 }
@@ -43,6 +47,54 @@ function PlayerGroup({ title, players, muted }: { title: string; players: Player
   );
 }
 
+function NewsTicker({ news }: { news: NewsItem[] }) {
+  const cutoff = new Date();
+  cutoff.setHours(cutoff.getHours() - 72);
+  const recent = news
+    .filter(n => new Date(n.publishedAt) > cutoff)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 3);
+
+  if (recent.length === 0) return null;
+
+  const dotColors: Record<string, string> = {
+    commitment: 'bg-emerald-400',
+    visit: 'bg-blue-400',
+    rumor: 'bg-amber-400',
+    departure: 'bg-red-400',
+    general: 'bg-[#8e909a]',
+  };
+
+  function timeAgo(dateString: string): string {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffMs = now.getTime() - date.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffHours < 1) return 'just now';
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays === 1) return 'yesterday';
+    return `${diffDays}d ago`;
+  }
+
+  return (
+    <div className="border-y border-[var(--outline-variant)]/15 py-3 px-1">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#FEBB21]">Latest</span>
+      </div>
+      <div className="space-y-1.5">
+        {recent.map((item) => (
+          <div key={item.id} className="flex items-center gap-2 text-xs">
+            <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColors[item.category]}`} />
+            <span className="text-[#E2E2E2]">{item.title}</span>
+            <span className="text-[#8e909a] font-mono text-[10px] flex-shrink-0">{timeAgo(item.publishedAt)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function portalDaysRemaining(): number {
   const closeDate = new Date('2026-04-21T23:59:59');
   const now = new Date();
@@ -61,30 +113,55 @@ export default async function Home() {
   const outgoing = data.players.filter(p => p.direction === 'outgoing');
   const returning = data.players.filter(p => p.direction === 'returning');
   const freshmen = data.players.filter(p => p.direction === 'freshman');
+  const totalSecured = returning.length + committedPlayers.length + freshmen.length;
+  const activeTargetCount = incoming.length - gonePlayers.length;
 
   return (
     <div className="min-h-screen bg-[var(--surface)]">
-      {/* Header */}
+      {/* Header — Score Bug Style */}
       <header className="sticky top-0 z-50 bg-[var(--surface-dim)] border-b border-[var(--outline-variant)]/20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div>
-                <h1 className="font-mono text-xs font-bold tracking-[0.2em] uppercase text-[#FEBB21]">
-                  WVU Basketball
-                </h1>
-                <p className="text-[10px] text-[#8e909a] font-mono uppercase tracking-wider">
-                  Transfer Portal Tracker
-                </p>
+            {/* Left: Title */}
+            <div>
+              <h1 className="text-lg md:text-xl font-extrabold tracking-tight text-[#FEBB21]">
+                WVU Basketball
+              </h1>
+              <p className="font-mono text-[10px] text-[#8e909a] uppercase tracking-[0.15em]">
+                Transfer Portal Tracker
+              </p>
+            </div>
+
+            {/* Center: Score Bug (desktop only) */}
+            <div className="hidden md:flex items-center gap-6">
+              <div className="text-center">
+                <div className="font-mono text-2xl font-bold">
+                  <span className="text-[#E2E2E2]">{totalSecured}</span>
+                  <span className="text-[#8e909a] mx-1">/</span>
+                  <span className="text-[#8e909a]">15</span>
+                </div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8e909a]">Roster Filled</div>
+              </div>
+              <div className="w-px h-8 bg-[var(--outline-variant)]/30" />
+              <div className="text-center">
+                <div className="font-mono text-2xl font-bold text-[#E2E2E2]">{activeTargetCount}</div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8e909a]">Targets</div>
+              </div>
+              <div className="w-px h-8 bg-[var(--outline-variant)]/30" />
+              <div className="text-center">
+                <div className="font-mono text-2xl font-bold text-[#E2E2E2]">{outgoing.length}</div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8e909a]">Outgoing</div>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+
+            {/* Right: Status */}
+            <div className="flex flex-col items-end gap-1.5">
               <LastUpdated timestamp={data.lastPipelineRun} />
               {daysLeft > 0 && (
-                <div className="hidden sm:flex items-center gap-1.5 bg-[var(--surface-container)] px-3 py-1.5 rounded border border-[#FEBB21]/20">
+                <div className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#FEBB21] animate-pulse" />
-                  <span className="text-[10px] font-mono font-bold text-[#FEBB21] uppercase tracking-wider">
-                    {daysLeft}d left
+                  <span className="font-mono text-[10px] font-bold text-[#FEBB21] uppercase tracking-wider">
+                    {daysLeft} days left
                   </span>
                 </div>
               )}
@@ -94,15 +171,19 @@ export default async function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 space-y-6">
-        {/* Roster Progress */}
-        <RosterProgressBar players={data.players} />
+        {/* Roster Roll Call — Who's on the team */}
+        <RosterRollCall players={data.players} />
 
-        {/* What's New */}
-        <WhatsNew news={data.news} />
+        {/* News Ticker */}
+        <NewsTicker news={data.news} />
 
         {/* Incoming Targets */}
         <section>
-          <SectionHeader title="Incoming Targets" count={incoming.length - gonePlayers.length} />
+          <SectionHeader
+            title="Incoming Targets"
+            count={activeTargetCount}
+            subtitle={`${committedPlayers.length} committed, ${visitingPlayers.length} visiting, ${targetPlayers.length} targets being tracked`}
+          />
           <PlayerGroup title="Committed" players={committedPlayers} />
           <PlayerGroup title="Visiting" players={visitingPlayers} />
           <PlayerGroup title="Targets" players={targetPlayers} />
@@ -110,22 +191,6 @@ export default async function Home() {
           {incoming.length === 0 && (
             <p className="text-sm text-[#8e909a] text-center py-8">No incoming targets yet.</p>
           )}
-        </section>
-
-        {/* Returning + Freshmen */}
-        <section>
-          <SectionHeader title="Returning Players" count={returning.length} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
-            {returning.map((player) => (
-              <PlayerCard key={player.id} player={player} />
-            ))}
-          </div>
-          <SectionHeader title="Incoming Freshmen" count={freshmen.length} />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {freshmen.map((player) => (
-              <PlayerCard key={player.id} player={player} />
-            ))}
-          </div>
         </section>
 
         {/* Outgoing Transfers */}
@@ -180,7 +245,7 @@ export default async function Home() {
             <NewsFeed news={data.news} />
           </div>
           <div className="lg:col-span-1">
-            <div className="sticky top-20">
+            <div className="sticky top-24">
               <LeadMagnet />
             </div>
           </div>
